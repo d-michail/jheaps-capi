@@ -35,23 +35,24 @@ int main() {
     jheaps_capi_AHeap_size(thread, heap, &size);
     assert (size == 4);
 
-    void *handle2_0;
-    jheaps_capi_AHeap_find_min(thread, heap, &handle2_0);
+    void *handle4_0;
+    jheaps_capi_AHeap_find_min(thread, heap, &handle4_0);
     assert(jheaps_capi_error_get_errno(thread) == 0);
     double key;
-    jheaps_capi_AHeapHandle_D_get_key(thread, handle2_0, &key);
+    jheaps_capi_AHeapHandle_D_get_key(thread, handle4_0, &key);
     assert(key == 5.5);
 
     long long value;
-    jheaps_capi_AHeapHandle_get_value(thread, handle2_0, &value);
+    jheaps_capi_AHeapHandle_get_value(thread, handle4_0, &value);
     assert(value == 5);
-    jheaps_capi_AHeapHandle_set_value(thread, handle2_0, 105);
-    jheaps_capi_AHeapHandle_get_value(thread, handle2_0, &value);
+    jheaps_capi_AHeapHandle_set_value(thread, handle4_0, 105);
+    jheaps_capi_AHeapHandle_get_value(thread, handle4_0, &value);
     assert(value == 105);
 
-    jheaps_capi_AHeapHandle_delete(thread, handle2_0);
+    // test delete
+    jheaps_capi_AHeapHandle_delete(thread, handle4_0);
     assert(jheaps_capi_error_get_errno(thread) == 0);
-    jheaps_capi_handles_destroy(thread, handle2_0);
+    jheaps_capi_handles_destroy(thread, handle4_0);
     jheaps_capi_AHeap_size(thread, heap, &size);
     assert (size == 3);
 
@@ -60,6 +61,24 @@ int main() {
     assert(jheaps_capi_error_get_errno(thread) == 0);
     jheaps_capi_AHeapHandle_D_get_key(thread, handle1_0, &key);
     assert(key == 15.5);
+    jheaps_capi_handles_destroy(thread, handle1_0);
+
+    // test delete min
+    jheaps_capi_AHeap_delete_min(thread, heap, &handle1_0);
+    assert(jheaps_capi_error_get_errno(thread) == 0);
+    jheaps_capi_AHeapHandle_D_get_key(thread, handle1_0, &key);
+    assert(key == 15.5);
+    jheaps_capi_handles_destroy(thread, handle1_0);
+
+    void *handle2_0;
+    jheaps_capi_AHeap_find_min(thread, heap, &handle2_0);
+    assert(jheaps_capi_error_get_errno(thread) == 0);
+    jheaps_capi_AHeapHandle_D_get_key(thread, handle2_0, &key);
+    assert(key == 17.5);
+    jheaps_capi_AHeapHandle_D_decrease_key(thread, handle2_0, 16.5);
+    jheaps_capi_AHeapHandle_D_get_key(thread, handle2_0, &key);
+    assert(key == 16.5);
+    jheaps_capi_handles_destroy(thread, handle2_0);
 
 
     jheaps_capi_handles_destroy(thread, handle1);
