@@ -17,14 +17,14 @@
  * 
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.jgrapht.capi.error;
+package org.jheaps.capi.error;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.graalvm.nativeimage.c.type.CCharPointer;
-import org.jgrapht.capi.JHeapsContext.Status;
+import org.jheaps.capi.JHeapsContext.Status;
 
 /**
  * Error handling

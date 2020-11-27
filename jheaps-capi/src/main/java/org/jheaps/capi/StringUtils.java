@@ -17,7 +17,7 @@
  * 
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.jgrapht.capi;
+package org.jheaps.capi;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

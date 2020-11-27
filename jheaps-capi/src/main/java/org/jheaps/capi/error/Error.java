@@ -17,13 +17,13 @@
  * 
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.jgrapht.capi.error;
+package org.jheaps.capi.error;
 
 import java.util.Objects;
 
 import org.graalvm.nativeimage.c.type.CTypeConversion.CCharPointerHolder;
-import org.jgrapht.capi.JHeapsContext.Status;
-import org.jgrapht.capi.StringUtils;
+import org.jheaps.capi.StringUtils;
+import org.jheaps.capi.JHeapsContext.Status;
 
 public class Error {
 

@@ -17,7 +17,7 @@
  * 
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.jgrapht.capi.impl;
+package org.jheaps.capi.impl;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
@@ -27,11 +27,11 @@ import org.graalvm.nativeimage.c.type.CDoublePointer;
 import org.graalvm.nativeimage.c.type.CIntPointer;
 import org.graalvm.nativeimage.c.type.CLongPointer;
 import org.graalvm.nativeimage.c.type.WordPointer;
-import org.jgrapht.capi.Constants;
-import org.jgrapht.capi.JHeapsContext.Status;
-import org.jgrapht.capi.error.StatusReturnExceptionHandler;
 import org.jheaps.AddressableHeap;
 import org.jheaps.AddressableHeap.Handle;
+import org.jheaps.capi.Constants;
+import org.jheaps.capi.JHeapsContext.Status;
+import org.jheaps.capi.error.StatusReturnExceptionHandler;
 
 /**
  * Operations on addressable heaps.

@@ -15,9 +15,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR LGPL-2.1-or-later
  */
-package org.jgrapht.capi.error;
+package org.jheaps.capi.error;
 
-import org.jgrapht.capi.JHeapsContext.Status;
+import org.jheaps.capi.JHeapsContext.Status;
 
 /**
  * Convert an exception into an status code.

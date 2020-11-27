@@ -17,7 +17,7 @@
  * 
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.jgrapht.capi;
+package org.jheaps.capi;
 
 /**
  * Global library constants

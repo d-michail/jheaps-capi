@@ -15,13 +15,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR LGPL-2.1-or-later
  */
-package org.jgrapht.capi.impl;
+package org.jheaps.capi.impl;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.type.CCharPointer;
-import org.jgrapht.capi.Constants;
-import org.jgrapht.capi.error.Errors;
+import org.jheaps.capi.Constants;
+import org.jheaps.capi.error.Errors;
 
 /**
  * Error handling
