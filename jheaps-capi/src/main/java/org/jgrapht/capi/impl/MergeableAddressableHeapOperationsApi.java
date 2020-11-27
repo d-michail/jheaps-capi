@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2014-2020, by Dimitrios Michail
+ * (C) Copyright 2020-2020, by Dimitrios Michail
  *
  * JHeaps Library
  * 
@@ -20,45 +20,35 @@
 package org.jgrapht.capi.impl;
 
 import org.graalvm.nativeimage.IsolateThread;
+import org.graalvm.nativeimage.ObjectHandle;
 import org.graalvm.nativeimage.ObjectHandles;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
-import org.graalvm.nativeimage.c.type.WordPointer;
 import org.jgrapht.capi.Constants;
-import org.jgrapht.capi.JHeapsContext.HeapType;
 import org.jgrapht.capi.JHeapsContext.Status;
 import org.jgrapht.capi.error.StatusReturnExceptionHandler;
-import org.jheaps.tree.FibonacciHeap;
-import org.jheaps.tree.PairingHeap;
+import org.jheaps.MergeableAddressableHeap;
 
 /**
- * Basic graph operations
+ * Operations on mergeable addressable heaps.
  */
-public class HeapApi {
+public class MergeableAddressableHeapOperationsApi {
 
 	private static ObjectHandles globalHandles = ObjectHandles.getGlobal();
 
 	/**
-	 * Create a heap and return its handle.
+	 * Meld two heaps. After the operation the second heap will be empty and not
+	 * usable anymore.
 	 *
-	 * @param thread the thread isolate
-	 * @return the heap handle
+	 * @param thread      the thread isolate
+	 * @param heap1Handle the heap1
+	 * @param heap1Handle the heap2
+	 * @return status
 	 */
-	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int createHeap(IsolateThread thread, HeapType heapType, WordPointer res) {
-		Object heap = null;
-		switch (heapType) {
-		case HEAP_TYPE_PAIRING:
-			heap = new PairingHeap<>();
-			break;
-		case HEAP_TYPE_FIBONACCI:
-		default:
-			heap = new FibonacciHeap<>();
-			break;
-		}
-		if (res.isNonNull()) {
-			res.write(globalHandles.create(heap));
-		}
+	@CEntryPoint(name = Constants.LIB_PREFIX + "MAHeap_D_meld", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int meld(IsolateThread thread, ObjectHandle heap1Handle, ObjectHandle head2Handle) {
+		MergeableAddressableHeap<Double, Long> heap1 = globalHandles.get(heap1Handle);
+		MergeableAddressableHeap<Double, Long> heap2 = globalHandles.get(heap1Handle);
+		heap1.meld(heap2);
 		return Status.STATUS_SUCCESS.getCValue();
 	}
 

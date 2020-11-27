@@ -15,6 +15,7 @@ typedef enum {
 
 typedef enum {
     HEAP_TYPE_PAIRING = 0,
+    HEAP_TYPE_RANKPAIRING,
     HEAP_TYPE_FIBONACCI,
 } heap_type_t;
 

@@ -59,6 +59,7 @@ public class JHeapsContext {
 
 		// @formatter:off
 	    HEAP_TYPE_PAIRING,
+	    HEAP_TYPE_RANKPAIRING,
 	    HEAP_TYPE_FIBONACCI,
 		;
 		// @formatter:on
