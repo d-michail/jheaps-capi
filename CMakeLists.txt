@@ -85,7 +85,6 @@ include(CTest)
 
 set(
     TEST_SOURCES 
-    "test_create.c"
     "test_double_heap.c"
 )
 foreach(testsourcefile ${TEST_SOURCES})
