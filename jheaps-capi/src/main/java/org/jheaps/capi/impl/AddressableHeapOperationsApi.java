@@ -41,7 +41,7 @@ public class AddressableHeapOperationsApi {
 	private static ObjectHandles globalHandles = ObjectHandles.getGlobal();
 
 	/**
-	 * Insert a key
+	 * Insert a double key with a value.
 	 *
 	 * @param thread     the thread isolate
 	 * @param heapHandle the heap
@@ -51,7 +51,7 @@ public class AddressableHeapOperationsApi {
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
 			+ "AHeap_D_insert_key", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int insertKeyValue(IsolateThread thread, ObjectHandle heapHandle, double key, WordPointer res) {
+	public static int insertDoubleKeyValue(IsolateThread thread, ObjectHandle heapHandle, double key, WordPointer res) {
 		AddressableHeap<Double, Long> heap = globalHandles.get(heapHandle);
 		Handle<Double, Long> handle = heap.insert(key, 0l);
 		if (res.isNonNull()) {
@@ -61,7 +61,27 @@ public class AddressableHeapOperationsApi {
 	}
 
 	/**
-	 * Insert a key with a value.
+	 * Insert a long key with a value.
+	 *
+	 * @param thread     the thread isolate
+	 * @param heapHandle the heap
+	 * @param key        the key
+	 * @param res        the new element handle
+	 * @return status
+	 */
+	@CEntryPoint(name = Constants.LIB_PREFIX
+			+ "AHeap_L_insert_key", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int insertLongKeyValue(IsolateThread thread, ObjectHandle heapHandle, long key, WordPointer res) {
+		AddressableHeap<Long, Long> heap = globalHandles.get(heapHandle);
+		Handle<Long, Long> handle = heap.insert(key, 0l);
+		if (res.isNonNull()) {
+			res.write(globalHandles.create(handle));
+		}
+		return Status.STATUS_SUCCESS.getCValue();
+	}
+
+	/**
+	 * Insert a double key with a value.
 	 *
 	 * @param thread     the thread isolate
 	 * @param heapHandle the heap
@@ -72,10 +92,32 @@ public class AddressableHeapOperationsApi {
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
 			+ "AHeap_D_insert_key_value", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int insertKeyValue(IsolateThread thread, ObjectHandle heapHandle, double key, long value,
+	public static int insertDoubleKeyValue(IsolateThread thread, ObjectHandle heapHandle, double key, long value,
 			WordPointer res) {
 		AddressableHeap<Double, Long> heap = globalHandles.get(heapHandle);
 		Handle<Double, ?> handle = heap.insert(key, value);
+		if (res.isNonNull()) {
+			res.write(globalHandles.create(handle));
+		}
+		return Status.STATUS_SUCCESS.getCValue();
+	}
+
+	/**
+	 * Insert a long key with a value.
+	 *
+	 * @param thread     the thread isolate
+	 * @param heapHandle the heap
+	 * @param key        the key
+	 * @param long       the value
+	 * @param res        the new element handle
+	 * @return status
+	 */
+	@CEntryPoint(name = Constants.LIB_PREFIX
+			+ "AHeap_L_insert_key_value", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int insertLongKeyValue(IsolateThread thread, ObjectHandle heapHandle, long key, long value,
+			WordPointer res) {
+		AddressableHeap<Long, Long> heap = globalHandles.get(heapHandle);
+		Handle<Long, ?> handle = heap.insert(key, value);
 		if (res.isNonNull()) {
 			res.write(globalHandles.create(handle));
 		}
@@ -145,7 +187,7 @@ public class AddressableHeapOperationsApi {
 	}
 
 	/**
-	 * Get the key from a handle
+	 * Get a double key from a handle
 	 *
 	 * @param thread the thread isolate
 	 * @param handle the heap handle handle
@@ -154,8 +196,26 @@ public class AddressableHeapOperationsApi {
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
 			+ "AHeapHandle_D_get_key", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int handleGetKey(IsolateThread thread, ObjectHandle handle, CDoublePointer res) {
+	public static int handleGetDoubleKey(IsolateThread thread, ObjectHandle handle, CDoublePointer res) {
 		AddressableHeap.Handle<Double, ?> h = globalHandles.get(handle);
+		if (res.isNonNull()) {
+			res.write(h.getKey());
+		}
+		return Status.STATUS_SUCCESS.getCValue();
+	}
+
+	/**
+	 * Get a long key from a handle
+	 *
+	 * @param thread the thread isolate
+	 * @param handle the heap handle handle
+	 * @param res    the key
+	 * @return status
+	 */
+	@CEntryPoint(name = Constants.LIB_PREFIX
+			+ "AHeapHandle_L_get_key", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int handleGetLongKey(IsolateThread thread, ObjectHandle handle, CLongPointer res) {
+		AddressableHeap.Handle<Long, ?> h = globalHandles.get(handle);
 		if (res.isNonNull()) {
 			res.write(h.getKey());
 		}
@@ -198,7 +258,7 @@ public class AddressableHeapOperationsApi {
 	}
 
 	/**
-	 * Decrease the key of a handle
+	 * Decrease a double key of a handle
 	 *
 	 * @param thread the thread isolate
 	 * @param handle the heap handle handle
@@ -207,8 +267,24 @@ public class AddressableHeapOperationsApi {
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
 			+ "AHeapHandle_D_decrease_key", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int handleDecreaseKey(IsolateThread thread, ObjectHandle handle, double key) {
+	public static int handleDecreaseDoubleKey(IsolateThread thread, ObjectHandle handle, double key) {
 		AddressableHeap.Handle<Double, ?> h = globalHandles.get(handle);
+		h.decreaseKey(key);
+		return Status.STATUS_SUCCESS.getCValue();
+	}
+
+	/**
+	 * Decrease a long key of a handle
+	 *
+	 * @param thread the thread isolate
+	 * @param handle the heap handle handle
+	 * @param key    the new key
+	 * @return status
+	 */
+	@CEntryPoint(name = Constants.LIB_PREFIX
+			+ "AHeapHandle_L_decrease_key", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int handleDecreaseLongKey(IsolateThread thread, ObjectHandle handle, long key) {
+		AddressableHeap.Handle<Long, ?> h = globalHandles.get(handle);
 		h.decreaseKey(key);
 		return Status.STATUS_SUCCESS.getCValue();
 	}
