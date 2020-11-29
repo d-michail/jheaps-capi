@@ -63,7 +63,7 @@ public class HeapOperationsApi {
 	 * @return status
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "AHeap_L_insert_key", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "Heap_L_insert_key", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int insertLong(IsolateThread thread, ObjectHandle heapHandle, long key) {
 		Heap<Long> heap = globalHandles.get(heapHandle);
 		heap.insert(key);
