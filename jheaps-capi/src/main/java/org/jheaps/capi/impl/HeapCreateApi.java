@@ -78,10 +78,10 @@ public class HeapCreateApi {
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING:
 			heap = new PairingHeap<>();
 			break;
-		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_RANKPAIRING:
+		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING_RANK:
 			heap = new RankPairingHeap<>();
 			break;
-		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_COSTLESSMELD_PAIRING:
+		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING_COSTLESSMELD:
 			heap = new CostlessMeldPairingHeap<>();
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_HOLLOW:
