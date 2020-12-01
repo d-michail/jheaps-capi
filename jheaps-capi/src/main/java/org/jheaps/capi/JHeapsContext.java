@@ -25,7 +25,6 @@ import org.graalvm.nativeimage.c.constant.CEnumLookup;
 import org.graalvm.nativeimage.c.constant.CEnumValue;
 import org.graalvm.nativeimage.c.function.CFunctionPointer;
 import org.graalvm.nativeimage.c.function.InvokeCFunctionPointer;
-import org.graalvm.nativeimage.c.type.CCharPointer;
 
 @CContext(JHeapsDirectives.class)
 public class JHeapsContext {
@@ -98,26 +97,14 @@ public class JHeapsContext {
 
 	}
 
-	/* Import of a C function pointer type. */
-	public interface NotifyAttributeFunctionPointer extends CFunctionPointer {
-
-		/*
-		 * Invocation of the function pointer. A call to the function is replaced with
-		 * an indirect call of the function pointer.
-		 */
-		@InvokeCFunctionPointer
-		void invoke(int element, CCharPointer key, CCharPointer value);
-	}
-
 	/*
-	 * Function pointer for importers which give the user control on how to convert
-	 * the input identifier of a vertex or edge into a long integer.
-	 */
-	public interface ImportIdFunctionPointer extends CFunctionPointer {
+     * Function pointer for a comparator with long identifiers (indirect reference). 
+     */
+    public interface LongComparatorFunctionPointer extends CFunctionPointer {
 
-		@InvokeCFunctionPointer
-		int invoke(CCharPointer id);
-
-	}
+            @InvokeCFunctionPointer
+            int invoke(long a, long b);
+            
+    }
 
 }

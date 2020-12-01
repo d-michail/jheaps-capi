@@ -19,6 +19,8 @@
  */
 package org.jheaps.capi.impl;
 
+import java.util.Comparator;
+
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandles;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
@@ -32,13 +34,10 @@ import org.jheaps.array.DaryArrayHeap;
 import org.jheaps.array.MinMaxBinaryArrayDoubleEndedHeap;
 import org.jheaps.capi.Constants;
 import org.jheaps.capi.JHeapsContext.HeapType;
+import org.jheaps.capi.JHeapsContext.LongComparatorFunctionPointer;
 import org.jheaps.capi.JHeapsContext.Status;
 import org.jheaps.capi.error.StatusReturnExceptionHandler;
 import org.jheaps.dag.HollowHeap;
-import org.jheaps.monotone.DoubleRadixAddressableHeap;
-import org.jheaps.monotone.DoubleRadixHeap;
-import org.jheaps.monotone.LongRadixAddressableHeap;
-import org.jheaps.monotone.LongRadixHeap;
 import org.jheaps.tree.BinaryTreeAddressableHeap;
 import org.jheaps.tree.BinaryTreeSoftAddressableHeap;
 import org.jheaps.tree.CostlessMeldPairingHeap;
@@ -53,9 +52,9 @@ import org.jheaps.tree.SimpleFibonacciHeap;
 import org.jheaps.tree.SkewHeap;
 
 /**
- * Heap creation
+ * Heaps with comparator.
  */
-public class HeapCreateApi {
+public class HeapCreateWithComparatorApi {
 
 	private static ObjectHandles globalHandles = ObjectHandles.getGlobal();
 
@@ -65,57 +64,65 @@ public class HeapCreateApi {
 	 * @param thread the thread isolate
 	 * @return the heap handle
 	 */
-	@CEntryPoint(name = Constants.LIB_PREFIX + "heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int createHeap(IsolateThread thread, HeapType heapType, WordPointer res) {
+	@CEntryPoint(name = Constants.LIB_PREFIX
+			+ "heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int createHeap(IsolateThread thread, HeapType heapType,
+			LongComparatorFunctionPointer comparatorFunctionPointer, WordPointer res) {
+
+		if (comparatorFunctionPointer.isNull()) {
+			throw new IllegalArgumentException("Comparator cannot be null");
+		}
+		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+
 		Object heap = null;
 		switch (heapType) {
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_FIBONACCI:
-			heap = new FibonacciHeap<>();
+			heap = new FibonacciHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_FIBONACCI_SIMPLE:
-			heap = new SimpleFibonacciHeap<>();
+			heap = new SimpleFibonacciHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING:
-			heap = new PairingHeap<>();
+			heap = new PairingHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING_RANK:
-			heap = new RankPairingHeap<>();
+			heap = new RankPairingHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING_COSTLESSMELD:
-			heap = new CostlessMeldPairingHeap<>();
+			heap = new CostlessMeldPairingHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_HOLLOW:
-			heap = new HollowHeap<>();
+			heap = new HollowHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_LEFTIST:
-			heap = new LeftistHeap<>();
+			heap = new LeftistHeap<>(comparator);
 			break;
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_SKEW:
-			heap = new SkewHeap<>();
+			heap = new SkewHeap<>(comparator);
 			break;
 		case HEAP_TYPE_BINARY_IMPLICIT:
-			heap = new BinaryArrayHeap<>();
+			heap = new BinaryArrayHeap<>(comparator);
 			break;
 		case HEAP_TYPE_BINARY_IMPLICIT_WEAK:
-			heap = new BinaryArrayWeakHeap<>();
+			heap = new BinaryArrayWeakHeap<>(comparator);
 			break;
 		case HEAP_TYPE_BINARY_IMPLICIT_WEAK_BULKINSERT:
-			heap = new BinaryArrayBulkInsertWeakHeap<>();
+			heap = new BinaryArrayBulkInsertWeakHeap<>(comparator);
 			break;
 		case HEAP_TYPE_ADDRESSABLE_BINARY_IMPLICIT:
-			heap = new BinaryArrayAddressableHeap<>();
+			heap = new BinaryArrayAddressableHeap<>(comparator);
 			break;
 		case HEAP_TYPE_ADDRESSABLE_BINARY_EXPLICIT:
-			heap = new BinaryTreeAddressableHeap<>();
+			heap = new BinaryTreeAddressableHeap<>(comparator);
 			break;
 		case HEAP_TYPE_DOUBLEENDED_BINARY_IMPLICIT_MINMAX:
-			heap = new MinMaxBinaryArrayDoubleEndedHeap<>();
+			heap = new MinMaxBinaryArrayDoubleEndedHeap<>(comparator);
 			break;
 		case HEAP_TYPE_DOUBLEENDED_MERGEABLE_ADDRESSABLE_FIBONACCI_REFLECTED:
-			heap = new ReflectedFibonacciHeap<>();
+			heap = new ReflectedFibonacciHeap<>(comparator);
 			break;
 		case HEAP_TYPE_DOUBLEENDED_MERGEABLE_ADDRESSABLE_PAIRING_REFLECTED:
-			heap = new ReflectedPairingHeap<>();
+			heap = new ReflectedPairingHeap<>(comparator);
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal heap type requested.");
@@ -133,18 +140,25 @@ public class HeapCreateApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "dary_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int createDaryHeap(IsolateThread thread, HeapType heapType, int d, WordPointer res) {
+			+ "dary_heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int createDaryHeap(IsolateThread thread, HeapType heapType,
+			LongComparatorFunctionPointer comparatorFunctionPointer, int d, WordPointer res) {
+
+		if (comparatorFunctionPointer.isNull()) {
+			throw new IllegalArgumentException("Comparator cannot be null");
+		}
+		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+
 		Object heap = null;
 		switch (heapType) {
 		case HEAP_TYPE_DARY_IMPLICIT:
-			heap = new DaryArrayHeap<>(d);
+			heap = new DaryArrayHeap<>(d, comparator);
 			break;
 		case HEAP_TYPE_ADDRESSABLE_DARY_IMPLICIT:
-			heap = new DaryArrayAddressableHeap<>(d);
+			heap = new DaryArrayAddressableHeap<>(d, comparator);
 			break;
 		case HEAP_TYPE_ADDRESSABLE_DARY_EXPLICIT:
-			heap = new DaryTreeAddressableHeap<>(d);
+			heap = new DaryTreeAddressableHeap<>(d, comparator);
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal heap type requested.");
@@ -162,66 +176,19 @@ public class HeapCreateApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "soft_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int createSoftHeap(IsolateThread thread, HeapType heapType, double errorRate, WordPointer res) {
+			+ "soft_heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+	public static int createSoftHeap(IsolateThread thread, HeapType heapType,
+			LongComparatorFunctionPointer comparatorFunctionPointer, double errorRate, WordPointer res) {
+
+		if (comparatorFunctionPointer.isNull()) {
+			throw new IllegalArgumentException("Comparator cannot be null");
+		}
+		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+
 		Object heap = null;
 		switch (heapType) {
 		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_BINARY_EXPLICIT_SOFT:
-			heap = new BinaryTreeSoftAddressableHeap<>(errorRate);
-			break;
-		default:
-			throw new IllegalArgumentException("Illegal heap type requested.");
-		}
-		if (res.isNonNull()) {
-			res.write(globalHandles.create(heap));
-		}
-		return Status.STATUS_SUCCESS.getCValue();
-	}
-
-	/**
-	 * Create a heap and return its handle.
-	 *
-	 * @param thread the thread isolate
-	 * @return the heap handle
-	 */
-	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "double_radix_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int createDoubleRadixHeap(IsolateThread thread, HeapType heapType, double min, double max,
-			WordPointer res) {
-		Object heap = null;
-		switch (heapType) {
-		case HEAP_TYPE_MONOTONE_DOUBLE_RADIX:
-			heap = new DoubleRadixHeap(min, max);
-			break;
-		case HEAP_TYPE_MONOTONE_ADDRESSABLE_DOUBLE_RADIX:
-			heap = new DoubleRadixAddressableHeap<>(min, max);
-			break;
-		default:
-			throw new IllegalArgumentException("Illegal heap type requested.");
-		}
-		if (res.isNonNull()) {
-			res.write(globalHandles.create(heap));
-		}
-		return Status.STATUS_SUCCESS.getCValue();
-	}
-
-	/**
-	 * Create a heap and return its handle.
-	 *
-	 * @param thread the thread isolate
-	 * @return the heap handle
-	 */
-	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "long_radix_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int createLongRadixHeap(IsolateThread thread, HeapType heapType, long min, long max,
-			WordPointer res) {
-		Object heap = null;
-		switch (heapType) {
-		case HEAP_TYPE_MONOTONE_LONG_RADIX:
-			heap = new LongRadixHeap(min, max);
-			break;
-		case HEAP_TYPE_MONOTONE_ADDRESSABLE_LONG_RADIX:
-			heap = new LongRadixAddressableHeap<>(min, max);
+			heap = new BinaryTreeSoftAddressableHeap<>(errorRate, comparator);
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal heap type requested.");
