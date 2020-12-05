@@ -50,7 +50,7 @@ public class DoubleEndedHeapOperationsApi {
 	public static int findDoubleMax(IsolateThread thread, ObjectHandle heapHandle, CDoublePointer res) {
 		DoubleEndedHeap<Double> heap = globalHandles.get(heapHandle);
 		if (res.isNonNull()) {
-			res.write(heap.findMin());
+			res.write(heap.findMax());
 		}
 		return Status.STATUS_SUCCESS.getCValue();
 	}
@@ -68,7 +68,7 @@ public class DoubleEndedHeapOperationsApi {
 	public static int findLongMax(IsolateThread thread, ObjectHandle heapHandle, CLongPointer res) {
 		DoubleEndedHeap<Long> heap = globalHandles.get(heapHandle);
 		if (res.isNonNull()) {
-			res.write(heap.findMin());
+			res.write(heap.findMax());
 		}
 		return Status.STATUS_SUCCESS.getCValue();
 	}
