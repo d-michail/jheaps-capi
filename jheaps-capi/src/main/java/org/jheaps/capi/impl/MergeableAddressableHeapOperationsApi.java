@@ -41,13 +41,13 @@ public class MergeableAddressableHeapOperationsApi {
 	 *
 	 * @param thread      the thread isolate
 	 * @param heap1Handle the heap1
-	 * @param heap1Handle the heap2
+	 * @param heap2Handle the heap2
 	 * @return status
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX + "MAHeap_D_meld", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int meldDoubleKeyedHeaps(IsolateThread thread, ObjectHandle heap1Handle, ObjectHandle head2Handle) {
+	public static int meldDoubleKeyedHeaps(IsolateThread thread, ObjectHandle heap1Handle, ObjectHandle heap2Handle) {
 		MergeableAddressableHeap<Double, Long> heap1 = globalHandles.get(heap1Handle);
-		MergeableAddressableHeap<Double, Long> heap2 = globalHandles.get(heap1Handle);
+		MergeableAddressableHeap<Double, Long> heap2 = globalHandles.get(heap2Handle);
 		heap1.meld(heap2);
 		return Status.STATUS_SUCCESS.getCValue();
 	}
@@ -58,13 +58,13 @@ public class MergeableAddressableHeapOperationsApi {
 	 *
 	 * @param thread      the thread isolate
 	 * @param heap1Handle the heap1
-	 * @param heap1Handle the heap2
+	 * @param heap2Handle the heap2
 	 * @return status
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX + "MAHeap_L_meld", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int meldLongKeyedHeaps(IsolateThread thread, ObjectHandle heap1Handle, ObjectHandle head2Handle) {
+	public static int meldLongKeyedHeaps(IsolateThread thread, ObjectHandle heap1Handle, ObjectHandle heap2Handle) {
 		MergeableAddressableHeap<Long, Long> heap1 = globalHandles.get(heap1Handle);
-		MergeableAddressableHeap<Long, Long> heap2 = globalHandles.get(heap1Handle);
+		MergeableAddressableHeap<Long, Long> heap2 = globalHandles.get(heap2Handle);
 		heap1.meld(heap2);
 		return Status.STATUS_SUCCESS.getCValue();
 	}
