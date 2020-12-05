@@ -92,6 +92,8 @@ public class Errors {
 			return Status.STATUS_CLASS_CAST;
 		} else if (e instanceof IOException) {
 			return Status.STATUS_IO_ERROR;
+		} else if (e instanceof IllegalStateException) {
+			return Status.STATUS_ILLEGAL_STATE;
 		} else {
 			return Status.STATUS_ERROR;
 		}

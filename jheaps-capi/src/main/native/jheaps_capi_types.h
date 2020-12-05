@@ -11,6 +11,7 @@ typedef enum {
     STATUS_NULL_POINTER,
     STATUS_CLASS_CAST,
     STATUS_IO_ERROR,
+    STATUS_ILLEGAL_STATE,
 } status_t;
 
 typedef enum {

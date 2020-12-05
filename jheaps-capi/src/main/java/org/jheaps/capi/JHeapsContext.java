@@ -42,6 +42,7 @@ public class JHeapsContext {
 		STATUS_NULL_POINTER,
 		STATUS_CLASS_CAST,
 		STATUS_IO_ERROR,
+		STATUS_ILLEGAL_STATE,
 		;
 		// @formatter:on
 
