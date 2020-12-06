@@ -65,7 +65,7 @@ public class HeapCreateWithComparatorApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "Heap__comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createHeap(IsolateThread thread, HeapType heapType,
 			LongComparatorFunctionPointer comparatorFunctionPointer, WordPointer res) {
 
@@ -140,7 +140,7 @@ public class HeapCreateWithComparatorApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "dary_heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "dary_Heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createDaryHeap(IsolateThread thread, HeapType heapType,
 			LongComparatorFunctionPointer comparatorFunctionPointer, int d, WordPointer res) {
 
@@ -176,7 +176,7 @@ public class HeapCreateWithComparatorApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "soft_heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "soft_Heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createSoftHeap(IsolateThread thread, HeapType heapType,
 			LongComparatorFunctionPointer comparatorFunctionPointer, double errorRate, WordPointer res) {
 

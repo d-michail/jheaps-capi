@@ -65,7 +65,7 @@ public class HeapCreateApi {
 	 * @param thread the thread isolate
 	 * @return the heap handle
 	 */
-	@CEntryPoint(name = Constants.LIB_PREFIX + "heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
+	@CEntryPoint(name = Constants.LIB_PREFIX + "Heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createHeap(IsolateThread thread, HeapType heapType, WordPointer res) {
 		Object heap = null;
 		switch (heapType) {
@@ -133,7 +133,7 @@ public class HeapCreateApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "dary_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "dary_Heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createDaryHeap(IsolateThread thread, HeapType heapType, int d, WordPointer res) {
 		Object heap = null;
 		switch (heapType) {
@@ -162,7 +162,7 @@ public class HeapCreateApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "soft_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "soft_Heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createSoftHeap(IsolateThread thread, HeapType heapType, double errorRate, WordPointer res) {
 		Object heap = null;
 		switch (heapType) {
@@ -185,7 +185,7 @@ public class HeapCreateApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "double_radix_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "double_radix_Heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createDoubleRadixHeap(IsolateThread thread, HeapType heapType, double min, double max,
 			WordPointer res) {
 		Object heap = null;
@@ -212,7 +212,7 @@ public class HeapCreateApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "long_radix_heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "long_radix_Heap_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createLongRadixHeap(IsolateThread thread, HeapType heapType, long min, long max,
 			WordPointer res) {
 		Object heap = null;

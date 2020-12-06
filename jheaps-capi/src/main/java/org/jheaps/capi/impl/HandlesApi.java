@@ -23,8 +23,6 @@ import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
 import org.graalvm.nativeimage.ObjectHandles;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
-import org.graalvm.nativeimage.c.type.CCharPointerPointer;
-import org.graalvm.nativeimage.c.type.CTypeConversion.CCharPointerHolder;
 import org.jheaps.capi.Constants;
 import org.jheaps.capi.JHeapsContext.Status;
 import org.jheaps.capi.error.StatusReturnExceptionHandler;
@@ -44,25 +42,5 @@ public class HandlesApi {
 		globalHandles.destroy(handle);
 		return Status.STATUS_SUCCESS.getCValue();
 	}
-
-	/**
-	 * Access a CCharPointerHolder which has been previously kept in the global
-	 * handles.
-	 * 
-	 * @param thread
-	 * @param handle
-	 * @param res
-	 * @return
-	 */
-	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "handles_get_ccharpointer", exceptionHandler = StatusReturnExceptionHandler.class)
-	public static int getHandleAsString(IsolateThread thread, ObjectHandle handle, CCharPointerPointer res) {
-		CCharPointerHolder cstr = globalHandles.get(handle);
-		if (cstr != null && res.isNonNull()) {
-			res.write(cstr.get());
-		}
-		return Status.STATUS_SUCCESS.getCValue();
-	}
-	
 
 }

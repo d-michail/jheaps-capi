@@ -47,7 +47,7 @@ public class HeapifyCreateWithComparatorApi {
 	private static ObjectHandles globalHandles = ObjectHandles.getGlobal();
 
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "heap_L_comparator_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "Heap_L_comparator_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createHeapWithLongHeapify(IsolateThread thread, HeapType heapType,
 			LongComparatorFunctionPointer comparatorFunctionPointer, CLongPointer keys, CLongPointer values, int n,
 			WordPointer res) {
@@ -87,7 +87,7 @@ public class HeapifyCreateWithComparatorApi {
 	}
 
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "dary_heap_L_comparator_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "dary_Heap_L_comparator_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createDaryHeapWithLongHeapify(IsolateThread thread, HeapType heapType,
 			LongComparatorFunctionPointer comparatorFunctionPointer, int d, CLongPointer keys, CLongPointer values,
 			int n, WordPointer res) {

@@ -44,7 +44,7 @@ public class HeapifyCreateApi {
 
 	private static ObjectHandles globalHandles = ObjectHandles.getGlobal();
 
-	@CEntryPoint(name = Constants.LIB_PREFIX + "heap_D_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
+	@CEntryPoint(name = Constants.LIB_PREFIX + "Heap_D_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createHeapWithDoubleHeapify(IsolateThread thread, HeapType heapType, CDoublePointer keys,
 			CLongPointer values, int n, WordPointer res) {
 		Double[] actualKeys = copyKeys(keys, n);
@@ -76,7 +76,7 @@ public class HeapifyCreateApi {
 		return Status.STATUS_SUCCESS.getCValue();
 	}
 
-	@CEntryPoint(name = Constants.LIB_PREFIX + "heap_L_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
+	@CEntryPoint(name = Constants.LIB_PREFIX + "Heap_L_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createHeapWithLongHeapify(IsolateThread thread, HeapType heapType, CLongPointer keys,
 			CLongPointer values, int n, WordPointer res) {
 		Long[] actualKeys = copyKeys(keys, n);
@@ -109,7 +109,7 @@ public class HeapifyCreateApi {
 	}
 
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "dary_heap_D_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "dary_Heap_D_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createDaryHeapWithDoubleHeapify(IsolateThread thread, HeapType heapType, int d,
 			CDoublePointer keys, CLongPointer values, int n, WordPointer res) {
 		Double[] actualKeys = copyKeys(keys, n);
@@ -133,7 +133,7 @@ public class HeapifyCreateApi {
 	}
 
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "dary_heap_L_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "dary_Heap_L_heapify", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createDaryHeapWithLongHeapify(IsolateThread thread, HeapType heapType, int d, CLongPointer keys,
 			CLongPointer values, int n, WordPointer res) {
 		Long[] actualKeys = copyKeys(keys, n);

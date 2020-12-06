@@ -16,7 +16,7 @@ int main() {
     }
 
     void *heap;
-    jheaps_capi_heap_create(thread, HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING, &heap);
+    jheaps_capi_Heap_create(thread, HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING, &heap);
     assert(jheaps_capi_error_get_errno(thread) == 0);
 
     void *handle1;
