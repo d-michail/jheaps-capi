@@ -65,7 +65,7 @@ public class HeapCreateWithComparatorApi {
 	 * @return the heap handle
 	 */
 	@CEntryPoint(name = Constants.LIB_PREFIX
-			+ "Heap__comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
+			+ "Heap_comparator_create", exceptionHandler = StatusReturnExceptionHandler.class)
 	public static int createHeap(IsolateThread thread, HeapType heapType,
 			LongComparatorFunctionPointer comparatorFunctionPointer, WordPointer res) {
 
