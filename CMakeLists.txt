@@ -85,7 +85,8 @@ include(CTest)
 
 set(
     TEST_SOURCES 
-    "test_double_heap.c"
+    "test_double_pairing.c"
+    "test_long_pairing.c"
 )
 foreach(testsourcefile ${TEST_SOURCES})
     string(REPLACE ".c" "" testname ${testsourcefile})
