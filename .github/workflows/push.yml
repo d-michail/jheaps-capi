@@ -15,7 +15,7 @@ jobs:
             cc: "cl",
             cxx: "cl",
             gu: "gu.cmd",
-            cmake-generator: "Visual Studio 16 2019 Win64"
+            cmake-generator: "Visual Studio 16 2019"
           }
         - {
             name: "Ubuntu Latest - GCC",
@@ -55,7 +55,8 @@ jobs:
         mkdir build
         cd build
         cmake ..
-        make
+        cmake --build .
+        ctest .
     - name: Linux Run
       if: runner.os == 'Linux'
       shell: bash
