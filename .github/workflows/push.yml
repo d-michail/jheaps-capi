@@ -10,21 +10,6 @@ jobs:
       matrix:
         config:
         - {
-            name: "Windows 2019 - MSVC",
-            os: windows-2019,
-            cc: "cl",
-            cxx: "cl",
-            gu: "gu.cmd",
-            cmake-generator: "Visual Studio 16 2019"
-          }
-        - {
-            name: "Ubuntu 20.04 - GCC",
-            os: ubuntu-20.04, 
-            cc: "gcc-9",
-            cxx: "g++-9",
-            gu: "gu"
-          }
-        - {
             name: "macOS Cataline 10.15 - GCC",
             os: macos-10.15, 
             cc: "gcc-9",
@@ -35,8 +20,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@master        
     - name: Setup GraalVM
       id: setup-graalvm
       uses: DeLaGuardo/setup-graalvm@4.0
@@ -68,7 +51,6 @@ jobs:
       if: runner.os == 'Linux'
       shell: bash
       run: | 
-        sudo apt install build-essential zlib1g-dev g++ gcc
         mkdir build
         cd build
         cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
@@ -80,6 +62,6 @@ jobs:
       run: | 
         mkdir build
         cd build
-        cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
+        cmake .. 
         make
         make test
