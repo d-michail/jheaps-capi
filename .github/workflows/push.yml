@@ -50,5 +50,5 @@ jobs:
     - name: CMake Build
       run: cmake --build build
     - name: Run Tests
-      run: make -C build test
+      run: ls build/ && make -C build test
 
