@@ -56,7 +56,7 @@ jobs:
         cd build
         cmake ..
         cmake --build .
-        ctest .
+        ctest -C Debug .
     - name: Linux Run
       if: runner.os == 'Linux'
       shell: bash
