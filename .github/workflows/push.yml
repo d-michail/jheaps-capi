@@ -42,11 +42,19 @@ jobs:
     - name: Set Windows ENV
       if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1
-    - name: Install Linux Dependencies
+      with: 
+        arch: "x64"
+      shell: cmd
+      run: >-
+        "SET CMAKE_GENERATOR=Visual Studio 15 2017 Win64"
+        "SET CMAKE_GENERATOR_TOOLSET=host=x64"
+        "cmake -Bbuild"
+        "cmake --build build"
+    - name: Linux Run
       if: runner.os == 'Linux'
-      run: sudo apt install build-essential zlib1g-dev g++ gcc
-    - name: CMake Configure 
+      shell: bash
       run: | 
+        sudo apt install build-essential zlib1g-dev g++ gcc
         mkdir build
         cd build
         cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
