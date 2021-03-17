@@ -44,6 +44,8 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
       with: 
         arch: "x64"
+    - name: Windows Run
+      if: runner.os == 'Windows'
       shell: cmd
       run: >-
         "SET CMAKE_GENERATOR=Visual Studio 15 2017 Win64"
