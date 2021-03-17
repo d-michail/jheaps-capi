@@ -8,17 +8,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        gu-binary: [gu, gu.cmd]
-        exclude:
-          - os: ubuntu-latest
-            gu-binary: gu.cmd
-          - os: windows-latest
-            gu-binary: gu
+        config:
+        - {
+            name: "Windows Latest - MSVC",
+            os: windows-latest,
+            cc: "cl",
+            cxx: "cl",
+            gu: "gu.cmd"
+          }
+        - {
+            name: "Ubuntu Latest - GCC",
+            os: ubuntu-latest, 
+            cc: "gcc-9",
+            cxx: "g++-9",
+            gu: "gu"
+          }
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master        
     - name: Setup GraalVM
       id: setup-graalvm
       uses: DeLaGuardo/setup-graalvm@4.0
@@ -28,4 +38,15 @@ jobs:
         arch: 'amd64'        
     - name: Install native-image component
       run: |
-        ${{ matrix.gu-binary }} install native-image
+        ${{ matrix.config.gu }} install native-image
+    - name: Set Windows ENV
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+    - name: Install Linux Dependencies
+      if: runner.os == 'Linux'
+      run: sudo apt install glibc-devel zlib-devel g++ gcc
+    - name: CMake Configure 
+      run: cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
+    - name: CMake Build
+      run: cmake --build build
+
