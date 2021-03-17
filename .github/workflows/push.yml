@@ -10,8 +10,16 @@ jobs:
       matrix:
         config:
         - {
-            name: "macOS Cataline 10.15 - GCC",
-            os: macos-10.15, 
+            name: "Windows 2019 - MSVC",
+            os: windows-2019,
+            cc: "cl",
+            cxx: "cl",
+            gu: "gu.cmd",
+            cmake-generator: "Visual Studio 16 2019"
+          }
+        - {
+            name: "Ubuntu 20.04 - GCC",
+            os: ubuntu-20.04, 
             cc: "gcc-9",
             cxx: "g++-9",
             gu: "gu"
@@ -56,12 +64,4 @@ jobs:
         cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
         make
         make test
-    - name: MacOS Run
-      if: runner.os == 'macOS'
-      shell: bash
-      run: | 
-        mkdir build
-        cd build
-        cmake .. 
-        make
-        make test
+
