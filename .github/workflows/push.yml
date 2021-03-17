@@ -49,4 +49,6 @@ jobs:
       run: cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
     - name: CMake Build
       run: cmake --build build
+    - name: Run Tests
+      run: make -C build test
 
