@@ -34,7 +34,7 @@ jobs:
       uses: DeLaGuardo/setup-graalvm@4.0
       with:
         graalvm: '21.0.0.2'
-        java: 'java8'
+        java: 'java11'
         arch: 'amd64'        
     - name: Install native-image component
       run: |
@@ -44,7 +44,7 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
     - name: Install Linux Dependencies
       if: runner.os == 'Linux'
-      run: sudo apt install glibc-devel zlib-devel g++ gcc
+      run: sudo apt install build-essential zlib1g-dev g++ gcc
     - name: CMake Configure 
       run: cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
     - name: CMake Build
