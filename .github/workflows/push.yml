@@ -3,7 +3,7 @@ name: Build project
 on:
   push:
     branches:
-      - macos
+      - master
   pull_request:
     branches:
       - master 
@@ -15,6 +15,21 @@ jobs:
       fail-fast: false
       matrix:
         config:
+        - {
+            name: "Windows 2019 - MSVC",
+            os: windows-2019,
+            cc: "cl",
+            cxx: "cl",
+            gu: "gu.cmd",
+            cmake-generator: "Visual Studio 16 2019"
+          }
+        - {
+            name: "Ubuntu 20.04 - GCC",
+            os: ubuntu-20.04, 
+            cc: "gcc-9",
+            cxx: "g++-9",
+            gu: "gu"
+          }        
         - {
             name: "MacOS 10.15",
             os: macos-10.15,
@@ -70,8 +85,4 @@ jobs:
         cd build
         cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
         make
-        ls -l
-        otool -l test_double_pairing
-        DYLD_PRINT_LIBRARIES=1 ./test_double_pairing
-        DYLD_PRINT_LIBRARIES=1 make test
-
+        make test        
