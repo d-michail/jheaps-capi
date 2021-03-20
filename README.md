@@ -1,4 +1,4 @@
-
+[![Build project](https://github.com/d-michail/jheaps-capi/actions/workflows/push.yml/badge.svg)](https://github.com/d-michail/jheaps-capi/actions/workflows/push.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Language](http://img.shields.io/badge/language-java-brightgreen.svg)](https://www.java.com/)
 
