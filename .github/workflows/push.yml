@@ -18,8 +18,8 @@ jobs:
         - {
             name: "MacOS 10.15",
             os: macos-10.15,
-            cc: "gcc",
-            cxx: "g++",
+            cc: "gcc-9",
+            cxx: "g++-9",
             gu: "gu",
           }
     steps:
@@ -62,12 +62,14 @@ jobs:
         cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
         make
         make test
-    - name: Linux Run
+    - name: MacOS Run
       if: runner.os == 'MacOS'
       shell: bash
       run: | 
         mkdir build
         cd build
-        cmake ..
+        cmake .. -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
         make
+        ./test_double_pairing
         make test
+
