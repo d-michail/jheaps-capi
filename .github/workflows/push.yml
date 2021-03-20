@@ -72,6 +72,6 @@ jobs:
         make
         ls -l
         otool -l test_double_pairing
-        ./test_double_pairing
-        make test
+        DYLD_PRINT_LIBRARIES=1 ./test_double_pairing
+        DYLD_PRINT_LIBRARIES=1 make test
 
