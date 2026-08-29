@@ -19,12 +19,12 @@
  */
 package org.jheaps.capi;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
 import org.graalvm.nativeimage.c.CContext;
-
-import com.oracle.svm.core.c.ProjectHeaderFile;
 
 public class JHeapsDirectives implements CContext.Directives {
 
@@ -40,10 +40,14 @@ public class JHeapsDirectives implements CContext.Directives {
 	public List<String> getHeaderFiles() {
 
 		/*
-		 * The header file with the C declarations that are imported. We use a helper
-		 * class that locates the file in our project structure.
+		 * The header file with the C declarations that are imported. The CMake build
+		 * copies this module's src/ tree into the build directory and runs
+		 * native-image from there, so the header is resolved relative to the current
+		 * working directory instead of GraalVM's internal (and no longer accessible
+		 * outside the module) ProjectHeaderFile helper.
 		 */
-		return Collections.singletonList(ProjectHeaderFile.resolve("org.jheaps.capi", "jheaps_capi_types.h"));
+		Path header = Paths.get("src", "main", "native", "jheaps_capi_types.h").toAbsolutePath();
+		return Collections.singletonList("\"" + header.toString().replace('\\', '/') + "\"");
 	}
 
 }
