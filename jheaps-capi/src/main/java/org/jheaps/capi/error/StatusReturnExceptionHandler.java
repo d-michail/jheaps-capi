@@ -17,13 +17,15 @@
  */
 package org.jheaps.capi.error;
 
-import com.oracle.svm.core.annotate.Uninterruptible;
+import org.graalvm.nativeimage.c.function.CEntryPoint;
+
+import com.oracle.svm.core.Uninterruptible;
 import org.jheaps.capi.JHeapsContext.Status;
 
 /**
  * Convert an exception into an status code.
  */
-public class StatusReturnExceptionHandler {
+public class StatusReturnExceptionHandler implements CEntryPoint.ExceptionHandler {
 
 	@Uninterruptible(reason = "Exception handler for a CEntryPoint.", calleeMustBe = false)
 	public static int handle(Throwable e) {
