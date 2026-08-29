@@ -17,6 +17,7 @@
  */
 package org.jheaps.capi.error;
 
+import com.oracle.svm.core.annotate.Uninterruptible;
 import org.jheaps.capi.JHeapsContext.Status;
 
 /**
@@ -24,6 +25,7 @@ import org.jheaps.capi.JHeapsContext.Status;
  */
 public class StatusReturnExceptionHandler {
 
+	@Uninterruptible(reason = "Exception handler for a CEntryPoint.", calleeMustBe = false)
 	public static int handle(Throwable e) {
 		Status s = Errors.throwableToStatus(e);
 		Errors.setError(e);
