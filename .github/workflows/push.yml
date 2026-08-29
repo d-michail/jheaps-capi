@@ -16,41 +16,35 @@ jobs:
       matrix:
         config:
         - {
-            name: "Windows 2019 - MSVC",
-            os: windows-2019,
+            name: "Windows 2022 - MSVC",
+            os: windows-2022,
             cc: "cl",
             cxx: "cl",
-            gu: "gu.cmd",
-            cmake-generator: "Visual Studio 16 2019"
+            cmake-generator: "Visual Studio 17 2022"
           }
         - {
-            name: "Ubuntu 20.04 - GCC",
-            os: ubuntu-20.04, 
-            cc: "gcc-9",
-            cxx: "g++-9",
-            gu: "gu"
-          }        
+            name: "Ubuntu 22.04 - GCC",
+            os: ubuntu-22.04,
+            cc: "gcc",
+            cxx: "g++"
+          }
         - {
-            name: "MacOS 10.15",
-            os: macos-10.15,
-            cc: "gcc-9",
-            cxx: "g++-9",
-            gu: "gu",
+            name: "MacOS 14",
+            os: macos-14,
+            cc: "clang",
+            cxx: "clang++",
           }
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         submodules: 'recursive'
     - name: Setup GraalVM
       id: setup-graalvm
-      uses: DeLaGuardo/setup-graalvm@4.0
+      uses: graalvm/setup-graalvm@v1
       with:
-        graalvm: '21.0.0.2'
-        java: 'java11'
-        arch: 'amd64'        
-    - name: Install native-image component
-      run: |
-        ${{ matrix.config.gu }} install native-image
+        java-version: '21'
+        distribution: 'graalvm-community'
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Set Windows ENV
       if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1
