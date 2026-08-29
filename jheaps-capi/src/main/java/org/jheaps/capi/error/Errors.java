@@ -77,6 +77,10 @@ public class Errors {
 		errorThreadLocal.set(new Error(status, message, e));
 	}
 
+	public static int throwableToStatusCValue(Throwable e) {
+		return throwableToStatus(e).getCValue();
+	}
+
 	public static Status throwableToStatus(Throwable e) {
 		if (e instanceof IllegalArgumentException) {
 			return Status.STATUS_ILLEGAL_ARGUMENT;
