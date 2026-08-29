@@ -46,11 +46,13 @@ import org.jheaps.tree.DaryTreeAddressableHeap;
 import org.jheaps.tree.FibonacciHeap;
 import org.jheaps.tree.LeftistHeap;
 import org.jheaps.tree.PairingHeap;
+import org.jheaps.tree.PurePairingHeap;
 import org.jheaps.tree.RankPairingHeap;
 import org.jheaps.tree.ReflectedFibonacciHeap;
 import org.jheaps.tree.ReflectedPairingHeap;
 import org.jheaps.tree.SimpleFibonacciHeap;
 import org.jheaps.tree.SkewHeap;
+import org.jheaps.tree.StrictFibonacciHeap;
 
 /**
  * Heap creation
@@ -116,6 +118,12 @@ public class HeapCreateApi {
 			break;
 		case HEAP_TYPE_DOUBLEENDED_MERGEABLE_ADDRESSABLE_PAIRING_REFLECTED:
 			heap = new ReflectedPairingHeap<>();
+			break;
+		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING_PURE:
+			heap = new PurePairingHeap<>();
+			break;
+		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_FIBONACCI_STRICT:
+			heap = new StrictFibonacciHeap<>();
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal heap type requested.");

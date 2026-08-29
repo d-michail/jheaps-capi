@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.jheaps</groupId>
 			<artifactId>jheaps</artifactId>
-			<version>0.13</version>
+			<version>0.16</version>
 		</dependency>
 	</dependencies>
 

@@ -45,11 +45,13 @@ import org.jheaps.tree.DaryTreeAddressableHeap;
 import org.jheaps.tree.FibonacciHeap;
 import org.jheaps.tree.LeftistHeap;
 import org.jheaps.tree.PairingHeap;
+import org.jheaps.tree.PurePairingHeap;
 import org.jheaps.tree.RankPairingHeap;
 import org.jheaps.tree.ReflectedFibonacciHeap;
 import org.jheaps.tree.ReflectedPairingHeap;
 import org.jheaps.tree.SimpleFibonacciHeap;
 import org.jheaps.tree.SkewHeap;
+import org.jheaps.tree.StrictFibonacciHeap;
 
 /**
  * Heaps with comparator.
@@ -123,6 +125,12 @@ public class HeapCreateWithComparatorApi {
 			break;
 		case HEAP_TYPE_DOUBLEENDED_MERGEABLE_ADDRESSABLE_PAIRING_REFLECTED:
 			heap = new ReflectedPairingHeap<>(comparator);
+			break;
+		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_PAIRING_PURE:
+			heap = new PurePairingHeap<>(comparator);
+			break;
+		case HEAP_TYPE_MERGEABLE_ADDRESSABLE_FIBONACCI_STRICT:
+			heap = new StrictFibonacciHeap<>(comparator);
 			break;
 		default:
 			throw new IllegalArgumentException("Illegal heap type requested.");
