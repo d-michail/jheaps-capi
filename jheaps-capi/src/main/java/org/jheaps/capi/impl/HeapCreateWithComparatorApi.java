@@ -74,7 +74,7 @@ public class HeapCreateWithComparatorApi {
 		if (comparatorFunctionPointer.isNull()) {
 			throw new IllegalArgumentException("Comparator cannot be null");
 		}
-		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+		Comparator<Long> comparator = new FunctionPointerComparator(comparatorFunctionPointer);
 
 		Object heap = null;
 		switch (heapType) {
@@ -155,7 +155,7 @@ public class HeapCreateWithComparatorApi {
 		if (comparatorFunctionPointer.isNull()) {
 			throw new IllegalArgumentException("Comparator cannot be null");
 		}
-		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+		Comparator<Long> comparator = new FunctionPointerComparator(comparatorFunctionPointer);
 
 		Object heap = null;
 		switch (heapType) {
@@ -191,7 +191,7 @@ public class HeapCreateWithComparatorApi {
 		if (comparatorFunctionPointer.isNull()) {
 			throw new IllegalArgumentException("Comparator cannot be null");
 		}
-		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+		Comparator<Long> comparator = new FunctionPointerComparator(comparatorFunctionPointer);
 
 		Object heap = null;
 		switch (heapType) {

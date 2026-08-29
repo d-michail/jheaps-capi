@@ -55,7 +55,7 @@ public class HeapifyCreateWithComparatorApi {
 		if (comparatorFunctionPointer.isNull()) {
 			throw new IllegalArgumentException("Comparator cannot be null");
 		}
-		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+		Comparator<Long> comparator = new FunctionPointerComparator(comparatorFunctionPointer);
 
 		Long[] actualKeys = HeapifyCreateApi.copyKeys(keys, n);
 		Object heap = null;
@@ -95,7 +95,7 @@ public class HeapifyCreateWithComparatorApi {
 		if (comparatorFunctionPointer.isNull()) {
 			throw new IllegalArgumentException("Comparator cannot be null");
 		}
-		Comparator<Long> comparator = (a, b) -> comparatorFunctionPointer.invoke(a, b);
+		Comparator<Long> comparator = new FunctionPointerComparator(comparatorFunctionPointer);
 
 		Long[] actualKeys = HeapifyCreateApi.copyKeys(keys, n);
 		Object heap = null;
